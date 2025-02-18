@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  ibm-mq:
+    image: icr.io/ibm-messaging/mq:latest
+    container_name: ibm-mq
+    restart: always
+    ports:
+      - "1414:1414"   # Porta para conexões MQ
+      - "9443:9443"   # Porta para o console web
+    environment:
+      LICENSE: accept               # Aceita a licença do IBM MQ
+      MQ_QMGR_NAME: admin             # Nome do Queue Manager
+      MQ_APP_PASSWORD: admin # Senha para o usuário 'app'
+      MQ_ADMIN_PASSWORD: admin
+    volumes:
+      - mq-data:/var/mqm              # Volume para persistir os dados do MQ
+
+volumes:
+  mq-data:
+    driver: local
