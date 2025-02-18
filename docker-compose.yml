@@ -6,15 +6,31 @@ services:
     container_name: ibm-mq
     restart: always
     ports:
-      - "1414:1414"   # Porta para conexões MQ
-      - "9443:9443"   # Porta para o console web
+      - "1414:1414"                   # Porta para conexões MQ
+      - "9443:9443"                   # Porta para o console web
     environment:
-      LICENSE: accept               # Aceita a licença do IBM MQ
+      LICENSE: accept                 # Aceita a licença do IBM MQ
       MQ_QMGR_NAME: admin             # Nome do Queue Manager
-      MQ_APP_PASSWORD: admin # Senha para o usuário 'app'
+      MQ_APP_PASSWORD: admin          # Senha para o usuário 'app'
       MQ_ADMIN_PASSWORD: admin
     volumes:
       - mq-data:/var/mqm              # Volume para persistir os dados do MQ
+  mq-to-kafka:
+    image: mq-to-kafka:latest
+    container_name: mq-to-kafka
+    build:
+      context: ./                     # Caminho do Dockerfile, se for necessário build local
+    ports:
+      - "8080:8080"                   # Disponibiliza a aplicação na porta 8080
+    depends_on:
+      - ibm-mq                        # Garante que o IBM MQ será iniciado antes da aplicação
+    environment:
+      MQ_HOST: "ibm-mq"
+      MQ_PORT: "1414"
+      MQ_CHANNEL: "DEV.ADMIN.SVRCONN"
+      MQ_QUEUE_MANAGER: "admin"
+      MQ_USERNAME: "admin"
+      MQ_PASSWORD: "admin"
 
 volumes:
   mq-data:
