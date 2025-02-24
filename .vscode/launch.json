@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MessageAdapter",
+            "request": "launch",
+            "mainClass": "br.com.phs.santander.mq.infra.adapter.MessageAdapter",
+            "projectName": "mq-to-kafka"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-MqToKafkaApplication<mq-to-kafka>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

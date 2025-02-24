@@ -1,2 +1,8 @@
 /home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/MqToKafkaApplication.java
+/home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/app/MQConfig.java
 /home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/app/resource/TestResource.java
+/home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/app/service/MessageService.java
+/home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/domain/dto/MQMessageDTO.java
+/home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/domain/usecase/MessageUseCase.java
+/home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/domain/usecase/impl/MessageUseCaseImpl.java
+/home/paulo/dev/workspace/PHS/Santander/mq-to-kafka/src/main/java/br/com/phs/santander/mq/infra/adapter/MessageAdapter.java

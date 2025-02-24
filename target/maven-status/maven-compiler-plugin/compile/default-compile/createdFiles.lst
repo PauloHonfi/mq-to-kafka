@@ -1,2 +1,9 @@
-br/com/phs/santander/mq/app/resource/TestResource.class
+br/com/phs/santander/mq/infra/adapter/MessageAdapter.class
 br/com/phs/santander/mq/MqToKafkaApplication.class
+br/com/phs/santander/mq/app/resource/TestResource.class
+br/com/phs/santander/mq/domain/usecase/MessageUseCase.class
+br/com/phs/santander/mq/domain/dto/MQMessageDTO$MQMessageDTOBuilder.class
+br/com/phs/santander/mq/domain/usecase/impl/MessageUseCaseImpl.class
+br/com/phs/santander/mq/domain/dto/MQMessageDTO.class
+br/com/phs/santander/mq/app/service/MessageService.class
+br/com/phs/santander/mq/app/MQConfig.class
