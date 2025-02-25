@@ -1,4 +1,4 @@
-package br.com.phs.santander.mq.infra.adapter;
+package br.com.phs.santander.mq.infra.service;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class MQMessageAdapter {
+public class MQMessageService {
 
     @Value("${my.mq.queue}")
     private String queue;
@@ -29,7 +29,7 @@ public class MQMessageAdapter {
 
     private final ObjectMapper mapper;
 
-    public MQMessageAdapter() {
+    public MQMessageService() {
         this.mapper = new ObjectMapper();
         this.mapper.registerModule(new JavaTimeModule());
     }
