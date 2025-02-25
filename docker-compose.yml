@@ -17,6 +17,27 @@ services:
     volumes:
       - mq-data:/var/mqm              # Volume para persistir os dados do MQ
 
+  zookeeper:
+    image: zookeeper:3.7.0
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "2181:2181"                   # Porta para o Zookeeper
+
+  kafka:
+    image: wurstmeister/kafka:2.13-2.7.0
+    container_name: kafka
+    restart: always
+    ports:
+      - "9092:9092"                   # Porta para o Kafka
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
 volumes:
   mq-data:
     driver: local
