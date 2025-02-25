@@ -1,5 +1,7 @@
 package br.com.phs.santander.mq.infra.adapter;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,13 +11,14 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.phs.santander.mq.domain.dto.MQMessageDTO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class MessageAdapter {
+public class MQMessageAdapter {
 
     @Value("${my.mq.queue}")
     private String queue;
@@ -24,11 +27,18 @@ public class MessageAdapter {
     @Qualifier("jmsOperationsmy")
     private JmsOperations jmsOperations;
 
+    private final ObjectMapper mapper;
+
+    public MQMessageAdapter() {
+        this.mapper = new ObjectMapper();
+        this.mapper.registerModule(new JavaTimeModule());
+    }
+
     public String send(final MQMessageDTO message) {
         String queueReturn;
         try{
-            ObjectMapper objectMapper = new ObjectMapper();
-            queueReturn = objectMapper.writeValueAsString(message);
+            message.setInclusionTime(LocalDateTime.now());
+            queueReturn = mapper.writeValueAsString(message);
             jmsOperations.convertAndSend(this.queue, queueReturn);
         }catch(JmsException | JsonProcessingException ex){
             throw new RuntimeException(ex);
@@ -36,7 +46,13 @@ public class MessageAdapter {
         return queueReturn;
     }
 
-    public static void main(String[] args) {
-        System.out.println("Teste" + System.lineSeparator() + "Teste2");
+    public MQMessageDTO receive() {
+        try {
+            String message = (String) jmsOperations.receiveAndConvert(this.queue);
+            log.info(message);
+            return mapper.readValue(message, MQMessageDTO.class);
+        } catch (JmsException | JsonProcessingException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

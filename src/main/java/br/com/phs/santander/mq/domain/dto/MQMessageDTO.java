@@ -1,13 +1,13 @@
 package br.com.phs.santander.mq.domain.dto;
 
-import lombok.Builder;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
-@Builder
 public class MQMessageDTO {
 
     private String message;
-    private String destination;
+    private LocalDateTime inclusionTime;
 
 }
